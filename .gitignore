@@ -1,2 +1,4 @@
 .ipynb_checkpoints/*.*
-study/.ipynb_checkpoints/Untitled-checkpoint.ipynb
+keras/.ipynb_checkpoints/*.*
+keras/__pycache__/*.*
+temp/.ipynb_checkpoints/*.*
