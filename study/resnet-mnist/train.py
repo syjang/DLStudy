@@ -41,7 +41,7 @@ def train(num_input,num_classes,batch_size):
             train_images_tmp, train_labels_tmp = ip.train_data,ip.train_labels
         with tf.variable_scope('test_image'):
             val_images_tmp, val_labels_tmp = ip.test_data,ip.test_labels
-        tf.summary.image('images', train_images_tmp[0][:2])        
+        
 
         #train_images = tf.convert_to_tensor(train_images,np.float32)
         #train_labels = tf.convert_to_tensor(train_labels,np.float32)
@@ -79,6 +79,7 @@ def train(num_input,num_classes,batch_size):
 
             ex = i
 
+        tf.summary.image('images', train_images[0][:2])        
 
         # Build model
        
@@ -108,8 +109,9 @@ def train(num_input,num_classes,batch_size):
         # Start running operations on the Graph.
 
         gpu_fraction =  0.95
-        config = tf.ConfigProto()
+        config = tf.ConfigProto(allow_soft_placement=True)
         config.gpu_options.allow_growth = True
+        
         sess = tf.Session(config=config)
         sess.run(init)
 
@@ -129,7 +131,7 @@ def train(num_input,num_classes,batch_size):
         val_iter = 100
         initial_lr = 0.1
         lr_decay = 0.1
-        for step in xrange(init_step, max_steps):
+        for step in range(init_step, max_steps):
             # val
             if step % val_interval == 0:
                 val_loss, val_acc = 0.0, 0.0
