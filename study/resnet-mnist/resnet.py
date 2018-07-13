@@ -65,16 +65,17 @@ class ResNet(object):
         logits = x
 
         # Probs & preds & acc
-        probs = tf.nn.softmax(x)
-        preds = tf.to_int32(tf.argmax(logits, 1))
-        ones = tf.constant(np.ones([self._hp.batch_size]), dtype=tf.float32)
-        zeros = tf.constant(np.zeros([self._hp.batch_size]), dtype=tf.float32)
-        correct = tf.where(tf.equal(preds, labels), ones, zeros)
-        acc = tf.reduce_mean(correct)
+        with tf.device('/cpu:0'):
+            probs = tf.nn.softmax(x)
+            preds = tf.to_int32(tf.argmax(logits, 1))
+            ones = tf.constant(np.ones([self._hp.batch_size]), dtype=tf.float32)
+            zeros = tf.constant(np.zeros([self._hp.batch_size]), dtype=tf.float32)
+            correct = tf.where(tf.equal(preds, labels), ones, zeros)
+            acc = tf.reduce_mean(correct)
 
-        # Loss & acc
-        losses = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=x, labels=labels)
-        loss = tf.reduce_mean(losses)
+            # Loss & acc
+            losses = tf.nn.sparse_softmax_cross_entropy_with_logits(logits=x, labels=labels)
+            loss = tf.reduce_mean(losses)
 
         return logits, preds, loss, acc
 

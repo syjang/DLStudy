@@ -108,11 +108,9 @@ def train(num_input,num_classes,batch_size):
         # Start running operations on the Graph.
 
         gpu_fraction =  0.95
-        sess = tf.Session(config=tf.ConfigProto(
-            gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=gpu_fraction),
-            allow_soft_placement=False,
-            # allow_soft_placement=True,
-            log_device_placement=False))
+        config = tf.ConfigProto()
+        config.gpu_options.allow_growth = True
+        sess = tf.Session(config=config)
         sess.run(init)
 
 
