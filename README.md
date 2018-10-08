@@ -1,3 +1,2 @@
 # Infomation
-Deeplearning Examples written by python.
-Examples in a books not perfertly work.
+Deeplearning Examples were written by python. Examples are written from books.
